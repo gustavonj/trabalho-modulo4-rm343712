@@ -1,0 +1,294 @@
+﻿kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    description: Defines how to deploy the database
+    template.alpha.openshift.io/wait-for-ready: 'true'
+  resourceVersion: '1320918544'
+  name: mongodb
+  uid: df0b57f2-2b47-4859-97b9-552ad6c80cc3
+  creationTimestamp: '2022-07-15T20:34:36Z'
+  generation: 2
+  managedFields:
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: apps.openshift.io/v1
+      time: '2022-07-15T20:34:36Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:description': {}
+            'f:template.alpha.openshift.io/wait-for-ready': {}
+          'f:labels':
+            .: {}
+            'f:template': {}
+            'f:template.openshift.io/template-instance-owner': {}
+        'f:spec':
+          'f:replicas': {}
+          'f:selector':
+            .: {}
+            'f:name': {}
+          'f:strategy':
+            'f:activeDeadlineSeconds': {}
+            'f:recreateParams':
+              .: {}
+              'f:timeoutSeconds': {}
+            'f:type': {}
+          'f:template':
+            .: {}
+            'f:metadata':
+              .: {}
+              'f:creationTimestamp': {}
+              'f:labels':
+                .: {}
+                'f:name': {}
+              'f:name': {}
+            'f:spec':
+              .: {}
+              'f:containers':
+                .: {}
+                'k:{"name":"mongodb"}':
+                  'f:image': {}
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/var/lib/mongodb/data"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:memory': {}
+                  'f:livenessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:tcpSocket':
+                      .: {}
+                      'f:port': {}
+                    'f:timeoutSeconds': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"MONGODB_ADMIN_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"MONGODB_DATABASE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"MONGODB_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"MONGODB_USER"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                  'f:readinessProbe':
+                    .: {}
+                    'f:exec':
+                      .: {}
+                      'f:command': {}
+                    'f:failureThreshold': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":27017,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"mongodb-data"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+          'f:triggers': {}
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: apps.openshift.io/v1
+      time: '2022-07-15T20:35:01Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:updatedReplicas': {}
+          'f:readyReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:details':
+            .: {}
+            'f:causes': {}
+            'f:message': {}
+          'f:replicas': {}
+          'f:availableReplicas': {}
+          'f:observedGeneration': {}
+          'f:unavailableReplicas': {}
+          'f:latestVersion': {}
+      subresource: status
+  namespace: gustavonj-dev
+  labels:
+    template: nodejs-mongo-persistent
+    template.openshift.io/template-instance-owner: c9aa1fa5-3f11-4431-b041-5bbd36c0161d
+spec:
+  strategy:
+    type: Recreate
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - mongodb
+        from:
+          kind: ImageStreamTag
+          namespace: openshift
+          name: 'mongodb:3.6'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/mongodb@sha256:a6c76b590dd105f20fbbf12408e79e9fb284fd4a545da3203350c377ff65cf38
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    name: mongodb
+  template:
+    metadata:
+      name: mongodb
+      creationTimestamp: null
+      labels:
+        name: mongodb
+    spec:
+      volumes:
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb
+      containers:
+        - resources:
+            limits:
+              memory: 512Mi
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-i'
+                - '-c'
+                - >-
+                  mongo 127.0.0.1:27017/$MONGODB_DATABASE -u $MONGODB_USER -p
+                  $MONGODB_PASSWORD --eval="quit()"
+            initialDelaySeconds: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: mongodb
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-user
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-password
+            - name: MONGODB_DATABASE
+              value: rm343712db
+            - name: MONGODB_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-admin-password
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /var/lib/mongodb/data
+          terminationMessagePolicy: File
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/openshift/mongodb@sha256:a6c76b590dd105f20fbbf12408e79e9fb284fd4a545da3203350c377ff65cf38
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  observedGeneration: 2
+  details:
+    message: config change
+    causes:
+      - type: ConfigChange
+  availableReplicas: 1
+  unavailableReplicas: 0
+  latestVersion: 1
+  updatedReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2022-07-15T20:35:01Z'
+      lastTransitionTime: '2022-07-15T20:35:01Z'
+      message: Deployment config has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2022-07-15T20:35:04Z'
+      lastTransitionTime: '2022-07-15T20:34:41Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "mongodb-1" successfully rolled out
+  replicas: 1
+  readyReplicas: 1

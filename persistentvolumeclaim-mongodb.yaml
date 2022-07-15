@@ -1,0 +1,90 @@
+﻿kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+    volume.kubernetes.io/selected-node: ip-10-0-215-179.us-east-2.compute.internal
+    volume.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+  resourceVersion: '1320805534'
+  name: mongodb
+  uid: 238ea6ae-9bae-4290-89cc-f0c5d5671f2a
+  creationTimestamp: '2022-07-15T19:44:27Z'
+  managedFields:
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-07-15T19:44:27Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:template': {}
+            'f:template.openshift.io/template-instance-owner': {}
+        'f:spec':
+          'f:accessModes': {}
+          'f:resources':
+            'f:requests':
+              .: {}
+              'f:storage': {}
+          'f:volumeMode': {}
+    - manager: kube-scheduler
+      operation: Update
+      apiVersion: v1
+      time: '2022-07-15T19:44:32Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:volume.kubernetes.io/selected-node': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-07-15T19:44:37Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:pv.kubernetes.io/bind-completed': {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+            'f:volume.beta.kubernetes.io/storage-provisioner': {}
+            'f:volume.kubernetes.io/storage-provisioner': {}
+        'f:spec':
+          'f:volumeName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-07-15T19:44:37Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:phase': {}
+      subresource: status
+  namespace: gustavonj-dev
+  finalizers:
+    - kubernetes.io/pvc-protection
+  labels:
+    template: nodejs-mongo-persistent
+    template.openshift.io/template-instance-owner: c794a6a2-9bab-4c8d-a6be-fbda3560d35c
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pvc-238ea6ae-9bae-4290-89cc-f0c5d5671f2a
+  storageClassName: gp2
+  volumeMode: Filesystem
+status:
+  phase: Bound
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi

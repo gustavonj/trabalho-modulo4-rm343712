@@ -1,0 +1,281 @@
+﻿kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    description: Defines how to deploy the application server
+    template.alpha.openshift.io/wait-for-ready: 'true'
+  resourceVersion: '1320935657'
+  name: rm343712-app
+  uid: 4068aaaa-2558-4263-82c3-4ae5bdbac763
+  creationTimestamp: '2022-07-15T20:34:36Z'
+  generation: 3
+  managedFields:
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: apps.openshift.io/v1
+      time: '2022-07-15T20:34:36Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:description': {}
+            'f:template.alpha.openshift.io/wait-for-ready': {}
+          'f:labels':
+            .: {}
+            'f:template': {}
+            'f:template.openshift.io/template-instance-owner': {}
+        'f:spec':
+          'f:replicas': {}
+          'f:selector':
+            .: {}
+            'f:name': {}
+          'f:strategy':
+            'f:activeDeadlineSeconds': {}
+            'f:recreateParams':
+              .: {}
+              'f:timeoutSeconds': {}
+            'f:type': {}
+          'f:template':
+            .: {}
+            'f:metadata':
+              .: {}
+              'f:creationTimestamp': {}
+              'f:labels':
+                .: {}
+                'f:name': {}
+              'f:name': {}
+            'f:spec':
+              .: {}
+              'f:containers':
+                .: {}
+                'k:{"name":"nodejs-mongo-persistent"}':
+                  'f:image': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:memory': {}
+                  'f:livenessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:httpGet':
+                      .: {}
+                      'f:path': {}
+                      'f:port': {}
+                      'f:scheme': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"DATABASE_SERVICE_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"MONGODB_ADMIN_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"MONGODB_DATABASE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"MONGODB_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"MONGODB_USER"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                  'f:readinessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:httpGet':
+                      .: {}
+                      'f:path': {}
+                      'f:port': {}
+                      'f:scheme': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":8080,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+          'f:triggers': {}
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: apps.openshift.io/v1
+      time: '2022-07-15T20:35:48Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:updatedReplicas': {}
+          'f:readyReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:details':
+            .: {}
+            'f:causes': {}
+            'f:message': {}
+          'f:replicas': {}
+          'f:availableReplicas': {}
+          'f:observedGeneration': {}
+          'f:unavailableReplicas': {}
+          'f:latestVersion': {}
+      subresource: status
+  namespace: gustavonj-dev
+  labels:
+    template: nodejs-mongo-persistent
+    template.openshift.io/template-instance-owner: c9aa1fa5-3f11-4431-b041-5bbd36c0161d
+spec:
+  strategy:
+    type: Recreate
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - nodejs-mongo-persistent
+        from:
+          kind: ImageStreamTag
+          namespace: gustavonj-dev
+          name: 'rm343712-app:latest'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/gustavonj-dev/rm343712-app@sha256:cfa617933ea5479cadf0d6516ca5aefbd1e0b6cba035931094917be0ff358a8c
+    - type: ConfigChange
+  replicas: 3
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    name: rm343712-app
+  template:
+    metadata:
+      name: rm343712-app
+      creationTimestamp: null
+      labels:
+        name: rm343712-app
+    spec:
+      containers:
+        - resources:
+            limits:
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: nodejs-mongo-persistent
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: DATABASE_SERVICE_NAME
+              value: mongodb
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-user
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-password
+            - name: MONGODB_DATABASE
+              value: rm343712db
+            - name: MONGODB_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rm343712-app
+                  key: database-admin-password
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/gustavonj-dev/rm343712-app@sha256:cfa617933ea5479cadf0d6516ca5aefbd1e0b6cba035931094917be0ff358a8c
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  observedGeneration: 3
+  details:
+    message: config change
+    causes:
+      - type: ConfigChange
+  availableReplicas: 3
+  unavailableReplicas: 0
+  latestVersion: 1
+  updatedReplicas: 3
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2022-07-15T20:35:51Z'
+      lastTransitionTime: '2022-07-15T20:35:42Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "rm343712-app-1" successfully rolled out
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2022-07-15T20:42:57Z'
+      lastTransitionTime: '2022-07-15T20:42:57Z'
+      message: Deployment config has minimum availability.
+  replicas: 3
+  readyReplicas: 3
